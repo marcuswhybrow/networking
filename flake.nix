@@ -1,10 +1,13 @@
 {
   description = "Dialogue to toggle WiFi or networking w/ desktop entry";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    rofi.url = "github:marcuswhybrow/rofi";
+  };
 
   outputs = inputs: let 
     pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-    rofi = "${pkgs.rofi}/bin/rofi";
+    rofi = "${inputs.rofi.packages.x86_64-linux.rofi}/bin/rofi";
     nmcli = "${pkgs.networkmanager}/bin/nmcli";
     notifySend = "${pkgs.libnotify}/bin/notify-send";
     networking = pkgs.writeShellScript "networking" ''
